@@ -1,2 +1,1 @@
-rootProject.name = "tcpws"
-
+rootProject.name = "tcpws-server"

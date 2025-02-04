@@ -27,7 +27,7 @@ application {
 jlink {
     launcher {
         jvmArgs = listOf(
-            "-Xms4m"
+            "-Xms128m"
         )
     }
 }
