@@ -20,7 +20,8 @@ dependencies {
 }
 
 application {
-    mainModule.set("com.nbintelligence.tcpws.server")
+    mainModule = "com.nbintelligence.tcpws.server"
+    mainModule = "com.nbintelligence.tcpws.server.Main"
 }
 
 jlink {
