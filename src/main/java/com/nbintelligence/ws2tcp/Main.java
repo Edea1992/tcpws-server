@@ -27,9 +27,7 @@ public class Main {
                 .handler(new ChannelInitializer<NioServerSocketChannel>() {
                     @Override
                     protected void initChannel(NioServerSocketChannel tunnelServerChannel) {
-                        Runtime.getRuntime().addShutdownHook(new Thread(
-                            tunnelServerChannel.close()::syncUninterruptibly
-                        ));
+                        Runtime.getRuntime().addShutdownHook(new Thread(() -> tunnelServerChannel.close().syncUninterruptibly()));
                     }
                 })
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
