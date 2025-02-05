@@ -33,7 +33,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository }}:latest .
+        run: docker build -t ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]'):latest .
 
       - name: List Docker images
         run: docker images
