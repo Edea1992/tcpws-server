@@ -16,11 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'oracle'
+          distribution: 'liberica'
+          java-version: '23'
+          cache: 'gradle'
 
       - name: Build project
         run: ./gradlew jlink --no-daemon
