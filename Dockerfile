@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-COPY ./java-image/ /usr/local/sbin
+COPY ./java-image/ /usr/
 
-WORKDIR /usr/local/sbin
-CMD ["./bin/tcpws-server"]
+WORKDIR /usr/bin
+CMD ["./tcpws-server"]
