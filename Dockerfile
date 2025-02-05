@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM alpine:edge
 
 COPY ./build/image/ /opt/
 
