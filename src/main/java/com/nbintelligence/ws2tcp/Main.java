@@ -101,9 +101,9 @@ public class Main {
                                 }
                             }).connect(InetAddress.getLoopbackAddress(), 1080).syncUninterruptibly();
                     }
-                }).bind(4399).addListener(future -> {
+                }).bind(80).addListener(future -> {
                     if (future.isSuccess()) {
-                        System.out.println("Server started on port 4399");
+                        System.out.println("Server started on port 80");
                     }
                 }).channel().closeFuture().syncUninterruptibly();
         } finally {
