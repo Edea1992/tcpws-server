@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: bellsoft/liberica-openjdk-alpine-musl:23
+    container: bellsoft/liberica-runtime-container:jdk-23-musl
 
     permissions:
       packages: write
