@@ -14,13 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build java project
+      - name: Build runtime image
         run: ./gradlew jlink --no-daemon
 
-      - name: Upload java image
+      - name: Upload runtime image
         uses: actions/upload-artifact@v4
         with:
-          name: java-image
+          name: ws2tcp
           path: ./build/image
 
   build-and-push-docker-image:
@@ -33,17 +33,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v2
-
       - name: Download java image
         uses: actions/download-artifact@v4
         with:
-          name: java-image
-          path: ./java-image
-
-      - name: List
-        run: ls
+          name: ws2tcp
+          path: ./ws2tcp
 
       - name: Build Docker image
         run: docker build -t ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]'):latest .

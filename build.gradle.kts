@@ -20,8 +20,8 @@ dependencies {
 }
 
 application {
-    mainModule = "com.nbintelligence.tcpws.server"
-    mainClass = "com.nbintelligence.tcpws.server.Main"
+    mainModule = "com.nbintelligence.ws2tcp"
+    mainClass = "com.nbintelligence.ws2tcp.Main"
 }
 
 jlink {

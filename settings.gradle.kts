@@ -1,1 +1,1 @@
-rootProject.name = "tcpws-server"
+rootProject.name = "ws2tcp"

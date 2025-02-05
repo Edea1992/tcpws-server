@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-COPY ./java-image/ /usr/
+COPY ./java-image/ /opt/ws2tcp
 
-WORKDIR /usr/bin
-CMD ["./tcpws-server"]
+WORKDIR /opt/ws2tcp
+CMD ["./bin/ws2tcp"]

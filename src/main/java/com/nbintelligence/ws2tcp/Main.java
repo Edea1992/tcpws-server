@@ -1,4 +1,4 @@
-package com.nbintelligence.tcpws.server;
+package com.nbintelligence.ws2tcp;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
@@ -101,7 +101,7 @@ public class Main {
                                 }
                             }).connect(InetAddress.getLoopbackAddress(), 1080).syncUninterruptibly();
                     }
-                }).bind(80).addListener(future -> {
+                }).bind(4399).addListener(future -> {
                     if (future.isSuccess()) {
                         System.out.println("Server started on port 4399");
                     }
