@@ -40,7 +40,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-image
-          path: ./build
+          path: .
 
       - name: Build Docker image
         run: docker build -t ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]'):latest .
