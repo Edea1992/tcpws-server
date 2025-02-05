@@ -24,6 +24,14 @@ public class Main {
             new ServerBootstrap()
                 .group(masterGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
+                .handler(new ChannelInitializer<NioServerSocketChannel>() {
+                    @Override
+                    protected void initChannel(NioServerSocketChannel tunnelServerChannel) {
+                        Runtime.getRuntime().addShutdownHook(new Thread(
+                            tunnelServerChannel.close()::syncUninterruptibly
+                        ));
+                    }
+                })
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel tunnelServerChannel) {
@@ -107,6 +115,7 @@ public class Main {
                     }
                 }).channel().closeFuture().syncUninterruptibly();
         } finally {
+            System.out.println("Server stopped");
             masterGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
