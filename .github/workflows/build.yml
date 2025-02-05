@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: bellsoft/liberica-openjdk-alpine-musl:23
 
     permissions:
       packages: write
@@ -16,12 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'liberica'
-          java-version: '23'
-          cache: 'gradle'
+#      - name: Set up JDK
+#        uses: actions/setup-java@v4
+#        with:
+#          distribution: 'liberica'
+#          java-version: '23'
+#          cache: 'gradle'
 
       - name: Build project
         run: ./gradlew jlink --no-daemon

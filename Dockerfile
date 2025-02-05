@@ -1,6 +1,6 @@
-FROM alpine:edge
+FROM alpine:latest
 
-COPY ./build/image/ /opt/
+COPY ./build/image/ /usr/local/sbin
 
-WORKDIR /opt/bin
+WORKDIR /usr/local/sbin
 CMD ["./tcpws-server"]
