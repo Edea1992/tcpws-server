@@ -30,9 +30,13 @@ application {
 }
 
 jlink {
+    options = listOf(
+        "--no-header-files",
+    )
+
     launcher {
         jvmArgs = listOf(
-            "-Xms128m"
+            "-Xms128m",
         )
     }
 }
