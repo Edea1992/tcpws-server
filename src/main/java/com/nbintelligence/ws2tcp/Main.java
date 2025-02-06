@@ -1,44 +1,34 @@
 package com.nbintelligence.ws2tcp;
 
+import com.nbintelligence.ws2tcp.internal.Platform;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ChannelInputShutdownEvent;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.websocketx.*;
 
 import java.net.InetAddress;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
-    final static ThreadFactory VIRTUAL_THREAD_FACTORY = Thread.ofVirtual().factory();
-
     public static void main(String[] args) {
-        var masterGroup = new NioEventLoopGroup(1, VIRTUAL_THREAD_FACTORY);
-        var workerGroup = new NioEventLoopGroup(1024, VIRTUAL_THREAD_FACTORY);
+        var masterGroup = Platform.createPreferredEventLoopGroup(1, Thread.ofVirtual().factory());
+        var workerGroup = Platform.createPreferredEventLoopGroup(1024, Thread.ofVirtual().factory());
         try {
             new ServerBootstrap()
                 .group(masterGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
-                .handler(new ChannelInitializer<NioServerSocketChannel>() {
+                .channel(Platform.PREFERRED_SERVER_SOCKET_CHANNEL_CLASS)
+                .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(NioServerSocketChannel tunnelServerChannel) {
-                        Runtime.getRuntime().addShutdownHook(new Thread(() -> tunnelServerChannel.close().syncUninterruptibly()));
-                    }
-                })
-                .childHandler(new ChannelInitializer<NioSocketChannel>() {
-                    @Override
-                    protected void initChannel(NioSocketChannel tunnelServerChannel) {
+                    protected void initChannel(SocketChannel tunnelServerChannel) {
                         new Bootstrap()
                             .group(workerGroup)
-                            .channel(NioSocketChannel.class)
-                            .handler(new ChannelInitializer<NioSocketChannel>() {
+                            .channel(Platform.PREFERRED_SOCKET_CHANNEL_CLASS)
+                            .handler(new ChannelInitializer<SocketChannel>() {
                                 @Override
-                                protected void initChannel(NioSocketChannel tcpClientChannel) {
+                                protected void initChannel(SocketChannel tcpClientChannel) {
                                     var currentCloseFrame = new AtomicReference<CloseWebSocketFrame>();
 
                                     tcpClientChannel.config()
@@ -109,7 +99,7 @@ public class Main {
                     }
                 }).bind(80).addListener(future -> {
                     if (future.isSuccess()) {
-                        System.out.println("Server started on port 80");
+                        System.out.println("Server started on port 80. [" + Platform.PREFERRED + "]");
                     }
                 }).channel().closeFuture().syncUninterruptibly();
         } finally {

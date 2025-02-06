@@ -16,6 +16,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation("io.projectreactor.tools:blockhound:1.0.10.RELEASE")
+
+    implementation("io.netty:netty-transport-native-epoll:4.1.117.Final:linux-x86_64")
+    implementation("io.netty:netty-transport-native-epoll:4.1.117.Final:linux-aarch_64")
+    implementation("io.netty:netty-transport-native-kqueue:4.1.117.Final:osx-x86_64")
+    implementation("io.netty:netty-transport-native-kqueue:4.1.117.Final:osx-aarch_64")
     implementation("io.netty:netty-codec-http:4.1.117.Final")
 }
 
