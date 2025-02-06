@@ -10,6 +10,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.websocketx.*;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
@@ -22,7 +23,7 @@ public class Main {
                 .channel(Platform.PREFERRED_SERVER_SOCKET_CHANNEL_CLASS)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel tunnelServerChannel) {
+                    protected void initChannel(SocketChannel tunnelServerChannel) throws UnknownHostException {
                         new Bootstrap()
                             .group(workerGroup)
                             .channel(Platform.PREFERRED_SOCKET_CHANNEL_CLASS)
@@ -95,7 +96,7 @@ public class Main {
                                             }
                                         });
                                 }
-                            }).connect(InetAddress.getLoopbackAddress(), 1080).syncUninterruptibly();
+                            }).connect(InetAddress.getByName("dante"), 1080).syncUninterruptibly();
                     }
                 }).bind(80).addListener(future -> {
                     if (future.isSuccess()) {
